@@ -1,0 +1,14 @@
+CSBot.Robots/_ReSharper.*
+CSBot.Robots/CSBot.Robots.*.ReSharper.user
+CSBot.Robots/*.cache
+CSBot.Robots/*/bin*
+CSBot.Robots/*.ncrunch*
+*s.suo
+*.ncrunchproject
+*/obj/*
+*/obj/*
+CSBot.Robots/CSBot.Robots/obj/*
+CSBot.Robots/CSRobots/obj/*
+CSBot.Robots/CSRobotsNoUI/obj/*
+*.user
+CSBot.Robots/SittingDuck/obj/*

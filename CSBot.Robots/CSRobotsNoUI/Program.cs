@@ -22,10 +22,10 @@ namespace CSRobotsNoUI
 
         private static void Usage()
         {
-            Console.WriteLine(
-                "usage: CSRobotsNoUI [resolution] [#match] [-timeout=<N>] [-teams=<N>] <FirstRobotClassName[.rb]> <SecondRobotClassName[.rb]> <...>");
+            Console.WriteLine("usage: CSRobotsNoUI [resolution] [#match] [-timeout=<N>] [-teams=<N>] <FirstRobotClassName[.rb]> <SecondRobotClassName[.rb]> <...>");
             Console.WriteLine("\t[resolution] (optional) should be of the form 640 480 or 800 600. default is 800 800");
             Console.WriteLine("\t[match] (optional) to replay a match, put the match# here, including the #sign.  ");
+            Console.WriteLine("\t[-nogui] (optional) run the match without the gui, for highest possible speed.(ignores speed value if present)");
             Console.WriteLine("\t[-timeout=<N>] (optional, default 50000) number of ticks a match will last at most.");
             Console.WriteLine("\t[-teams=<N>] (optional) split robots into N teams. Match ends when only one team has robots left.");
             Console.WriteLine("\tthe names of the robot files have to match the class names of the robots, and the namespaces of the robot classes.");

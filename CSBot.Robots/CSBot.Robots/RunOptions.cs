@@ -6,6 +6,12 @@ namespace CSBot.Robots
 {
     public class RunOptions
     {
+        public bool Error { get; set; }
+
+        public Battlefield Battlefield { get; set; }
+
+        public bool ShowUI { get; set; }
+
         public RunOptions(string[] args)
         {
             // look for resolution arg
@@ -34,7 +40,9 @@ namespace CSBot.Robots
             if (!string.IsNullOrEmpty(timeoutArgument))
                 timeout = Convert.ToInt32(timeoutArgument);
 
-
+            ShowUI = true;
+            if (ArgumentExists("-noui", arguments))
+                ShowUI = false;
             /*
 show_radar = false
 ARGV.grep( /^show_radar/ )do |item|
@@ -80,11 +88,18 @@ end*/
             }
         }
 
-        public bool Error { get; set; }
+        private bool ArgumentExists(string pattern, IList<string> arguments)
+        {
+            for (var index = 0; index < arguments.Count; index++)
+            {
+                if (arguments[index].ToLower() != pattern.ToLower()) continue;
+                arguments.RemoveAt(index);
+                return true;
+            }
+            return false;
+        }
 
-        public Battlefield Battlefield { get; set; }
-
-        private static string SearchForArgumentStartingWith(string pattern, List<string> arguments)
+        private static string SearchForArgumentStartingWith(string pattern, IList<string> arguments)
         {
             var value = string.Empty;
             for (var index = 0; index < arguments.Count; index++)

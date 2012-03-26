@@ -51,7 +51,7 @@ namespace CSBot.Robots
             get { return _speech; }
         }
 
-        private string SkinPrefix
+        public string SkinPrefix
         {
             get { return Robot.SkinPrefix; }
             //set { .Robot.SkinPrefix = value; }

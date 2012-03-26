@@ -8,6 +8,7 @@ namespace CSRobots
 {
     internal class Program
     {
+        public static RunOptions RunOptions { get; set; }
         private static void Main(string[] args)
         {
             var runOptions = new RunOptions(args);
@@ -18,7 +19,7 @@ namespace CSRobots
             else
             {
                 if (runOptions.ShowUi)
-                    RunInGui(runOptions.Battlefield,runOptions.X, runOptions.Y, runOptions.Speed, runOptions.ShowRadar);
+                    RunInGui(runOptions);
                 else
                     RunOutOfGui(runOptions.Battlefield);
             }
@@ -34,8 +35,8 @@ namespace CSRobots
             Console.WriteLine("\t[-teams=<N>] (optional) split robots into N teams. Match ends when only one team has robots left.");
             Console.WriteLine("\tthe names of the robot files have to match the class names of the robots, and the namespaces of the robot classes.");
             Console.WriteLine("\t(up to 8 robots)");
-            Console.WriteLine("\te.g. 'CSRobotsNoUI SittingDuck NervousDuck'");
-            Console.WriteLine("\t or 'CSRobotsNoUI 600 600 #1234567890 SittingDuck NervousDuck'");
+            Console.WriteLine("\te.g. 'CSRobots SittingDuck NervousDuck'");
+            Console.WriteLine("\t or 'CSRobots 600 600 #1234567890 SittingDuck NervousDuck'");
         }
 
         private static void RunOutOfGui(Battlefield battlefield)
@@ -52,30 +53,20 @@ namespace CSRobots
             //exit(0);
         }
 
-        private static void RunInGui(Battlefield battlefield, int xres, int yres, int speedMultiplier, bool showRadar)
+        private static void RunInGui(RunOptions runOptions)
         {
             var t = new Thread(ThreadProc);
             t.SetApartmentState(ApartmentState.STA);
-            t.Start(); 
-            //arena = TkArena.new(battlefield, xres, yres, speed_multiplier)
-            //arena.show_radar = show_radar
-            //game_over_counter = battlefield.teams.all? {|k,t | t.size < 2}?250 :500
-            //outcome_printed = false
-            //arena.on_game_over{|battlefield |
-            //    unless outcome_printed
-            //    {
-            //       print_outcome(battlefield)
-            //       outcome_printed = true
-            //    }
-            //    exit 0 if game_over_counter < 0
-            //    game_over_counter -= 1
-            //}
-            //arena.run
+            t.Start(runOptions); 
         }
 
-        private static void ThreadProc()
+        private static void ThreadProc(object arg)
         {
+            var runOptions = arg as RunOptions;
+            if (runOptions == null) return;
+            RunOptions = runOptions;
             App.Main();
+            PrintOutcome(runOptions.Battlefield);
         }
 
 

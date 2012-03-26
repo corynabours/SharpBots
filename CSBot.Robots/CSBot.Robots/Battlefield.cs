@@ -31,12 +31,12 @@ namespace CSBot.Robots
             get { return _robots; }
         }
 
-        private List<Bullet> Bullets
+        public List<Bullet> Bullets
         {
             get { return _bullets; }
         }
 
-        private List<Explosion> Explosions
+        public List<Explosion> Explosions
         {
             get { return _explosions; }
         }

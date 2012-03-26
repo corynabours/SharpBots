@@ -58,6 +58,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="BulletAnimation.cs" />
+    <Compile Include="ExplosionAnimation.cs" />
+    <Compile Include="RobotAnimation.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -105,6 +108,132 @@
       <Project>{5E6603C0-EDD3-431F-909D-AD87647F048E}</Project>
       <Name>SittingDuck</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="images\explosion00.gif" />
+    <EmbeddedResource Include="images\explosion01.gif" />
+    <EmbeddedResource Include="images\explosion02.gif" />
+    <EmbeddedResource Include="images\explosion03.gif" />
+    <EmbeddedResource Include="images\explosion04.gif" />
+    <EmbeddedResource Include="images\explosion05.gif" />
+    <EmbeddedResource Include="images\explosion06.gif" />
+    <EmbeddedResource Include="images\explosion07.gif" />
+    <EmbeddedResource Include="images\explosion08.gif" />
+    <EmbeddedResource Include="images\explosion09.gif" />
+    <EmbeddedResource Include="images\explosion10.gif" />
+    <EmbeddedResource Include="images\explosion11.gif" />
+    <EmbeddedResource Include="images\explosion12.gif" />
+    <EmbeddedResource Include="images\explosion13.gif" />
+    <EmbeddedResource Include="images\explosion14.gif" />
+    <Resource Include="images\red_body000.gif" />
+    <Resource Include="images\red_body010.gif" />
+    <Resource Include="images\red_body020.gif" />
+    <Resource Include="images\red_body030.gif" />
+    <Resource Include="images\red_body040.gif" />
+    <Resource Include="images\red_body050.gif" />
+    <Resource Include="images\red_body060.gif" />
+    <Resource Include="images\red_body070.gif" />
+    <Resource Include="images\red_body080.gif" />
+    <Resource Include="images\red_body090.gif" />
+    <Resource Include="images\red_body100.gif" />
+    <Resource Include="images\red_body110.gif" />
+    <Resource Include="images\red_body120.gif" />
+    <Resource Include="images\red_body130.gif" />
+    <Resource Include="images\red_body140.gif" />
+    <Resource Include="images\red_body150.gif" />
+    <Resource Include="images\red_body160.gif" />
+    <Resource Include="images\red_body170.gif" />
+    <Resource Include="images\red_body180.gif" />
+    <Resource Include="images\red_body190.gif" />
+    <Resource Include="images\red_body200.gif" />
+    <Resource Include="images\red_body210.gif" />
+    <Resource Include="images\red_body220.gif" />
+    <Resource Include="images\red_body230.gif" />
+    <Resource Include="images\red_body240.gif" />
+    <Resource Include="images\red_body250.gif" />
+    <Resource Include="images\red_body260.gif" />
+    <Resource Include="images\red_body270.gif" />
+    <Resource Include="images\red_body280.gif" />
+    <Resource Include="images\red_body290.gif" />
+    <Resource Include="images\red_body300.gif" />
+    <Resource Include="images\red_body310.gif" />
+    <Resource Include="images\red_body320.gif" />
+    <Resource Include="images\red_body330.gif" />
+    <Resource Include="images\red_body340.gif" />
+    <Resource Include="images\red_body350.gif" />
+    <Resource Include="images\red_radar000.gif" />
+    <Resource Include="images\red_radar010.gif" />
+    <Resource Include="images\red_radar020.gif" />
+    <Resource Include="images\red_radar030.gif" />
+    <Resource Include="images\red_radar040.gif" />
+    <Resource Include="images\red_radar050.gif" />
+    <Resource Include="images\red_radar060.gif" />
+    <Resource Include="images\red_radar070.gif" />
+    <Resource Include="images\red_radar080.gif" />
+    <Resource Include="images\red_radar090.gif" />
+    <Resource Include="images\red_radar100.gif" />
+    <Resource Include="images\red_radar110.gif" />
+    <Resource Include="images\red_radar120.gif" />
+    <Resource Include="images\red_radar130.gif" />
+    <Resource Include="images\red_radar140.gif" />
+    <Resource Include="images\red_radar150.gif" />
+    <Resource Include="images\red_radar160.gif" />
+    <Resource Include="images\red_radar170.gif" />
+    <Resource Include="images\red_radar180.gif" />
+    <Resource Include="images\red_radar190.gif" />
+    <Resource Include="images\red_radar200.gif" />
+    <Resource Include="images\red_radar210.gif" />
+    <Resource Include="images\red_radar220.gif" />
+    <Resource Include="images\red_radar230.gif" />
+    <Resource Include="images\red_radar240.gif" />
+    <Resource Include="images\red_radar250.gif" />
+    <Resource Include="images\red_radar260.gif" />
+    <Resource Include="images\red_radar270.gif" />
+    <Resource Include="images\red_radar280.gif" />
+    <Resource Include="images\red_radar290.gif" />
+    <Resource Include="images\red_radar300.gif" />
+    <Resource Include="images\red_radar310.gif" />
+    <Resource Include="images\red_radar320.gif" />
+    <Resource Include="images\red_radar330.gif" />
+    <Resource Include="images\red_radar340.gif" />
+    <Resource Include="images\red_radar350.gif" />
+    <Resource Include="images\red_turret000.gif" />
+    <Resource Include="images\red_turret010.gif" />
+    <Resource Include="images\red_turret020.gif" />
+    <Resource Include="images\red_turret030.gif" />
+    <Resource Include="images\red_turret040.gif" />
+    <Resource Include="images\red_turret050.gif" />
+    <Resource Include="images\red_turret060.gif" />
+    <Resource Include="images\red_turret070.gif" />
+    <Resource Include="images\red_turret080.gif" />
+    <Resource Include="images\red_turret090.gif" />
+    <Resource Include="images\red_turret100.gif" />
+    <Resource Include="images\red_turret110.gif" />
+    <Resource Include="images\red_turret120.gif" />
+    <Resource Include="images\red_turret130.gif" />
+    <Resource Include="images\red_turret140.gif" />
+    <Resource Include="images\red_turret150.gif" />
+    <Resource Include="images\red_turret160.gif" />
+    <Resource Include="images\red_turret170.gif" />
+    <Resource Include="images\red_turret180.gif" />
+    <Resource Include="images\red_turret190.gif" />
+    <Resource Include="images\red_turret200.gif" />
+    <Resource Include="images\red_turret210.gif" />
+    <Resource Include="images\red_turret220.gif" />
+    <Resource Include="images\red_turret230.gif" />
+    <Resource Include="images\red_turret240.gif" />
+    <Resource Include="images\red_turret250.gif" />
+    <Resource Include="images\red_turret260.gif" />
+    <Resource Include="images\red_turret270.gif" />
+    <Resource Include="images\red_turret280.gif" />
+    <Resource Include="images\red_turret290.gif" />
+    <Resource Include="images\red_turret300.gif" />
+    <Resource Include="images\red_turret310.gif" />
+    <Resource Include="images\red_turret320.gif" />
+    <Resource Include="images\red_turret330.gif" />
+    <Resource Include="images\red_turret340.gif" />
+    <Resource Include="images\red_turret350.gif" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

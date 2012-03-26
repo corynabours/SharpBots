@@ -36,7 +36,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>CSRobots.App</StartupObject>
+    <StartupObject>CSRobots.Program</StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -72,6 +72,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -94,6 +95,16 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CSBot.Robots\CSBot.Robots.csproj">
+      <Project>{DA961973-22A1-4F30-BE36-0535EA632D71}</Project>
+      <Name>CSBot.Robots</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SittingDuck\SittingDuck.csproj">
+      <Project>{5E6603C0-EDD3-431F-909D-AD87647F048E}</Project>
+      <Name>SittingDuck</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

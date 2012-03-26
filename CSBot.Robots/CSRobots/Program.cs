@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using CSBot.Robots;
 
-namespace CSRobotsNoUI
+namespace CSRobots
 {
     internal class Program
     {
@@ -16,13 +17,16 @@ namespace CSRobotsNoUI
             }
             else
             {
-                RunOutOfGui(runOptions.Battlefield);
+                if (runOptions.ShowUi)
+                    RunInGui(runOptions.Battlefield,runOptions.X, runOptions.Y, runOptions.Speed, runOptions.ShowRadar);
+                else
+                    RunOutOfGui(runOptions.Battlefield);
             }
         }
 
         private static void Usage()
         {
-            Console.WriteLine("usage: CSRobotsNoUI [resolution] [#match] [-timeout=<N>] [-teams=<N>] <FirstRobotClassName[.rb]> <SecondRobotClassName[.rb]> <...>");
+            Console.WriteLine("usage: CSRobots [resolution] [#match] [-timeout=<N>] [-teams=<N>] <FirstRobotClassName[.rb]> <SecondRobotClassName[.rb]> <...>");
             Console.WriteLine("\t[resolution] (optional) should be of the form 640 480 or 800 600. default is 800 800");
             Console.WriteLine("\t[match] (optional) to replay a match, put the match# here, including the #sign.  ");
             Console.WriteLine("\t[-nogui] (optional) run the match without the gui, for highest possible speed.(ignores speed value if present)");
@@ -50,6 +54,9 @@ namespace CSRobotsNoUI
 
         private static void RunInGui(Battlefield battlefield, int xres, int yres, int speedMultiplier, bool showRadar)
         {
+            var t = new Thread(ThreadProc);
+            t.SetApartmentState(ApartmentState.STA);
+            t.Start(); 
             //arena = TkArena.new(battlefield, xres, yres, speed_multiplier)
             //arena.show_radar = show_radar
             //game_over_counter = battlefield.teams.all? {|k,t | t.size < 2}?250 :500
@@ -65,6 +72,12 @@ namespace CSRobotsNoUI
             //}
             //arena.run
         }
+
+        private static void ThreadProc()
+        {
+            App.Main();
+        }
+
 
         private static void PrintOutcome(Battlefield battlefield)
         {

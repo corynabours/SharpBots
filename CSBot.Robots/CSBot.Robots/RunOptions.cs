@@ -7,24 +7,26 @@ namespace CSBot.Robots
     public class RunOptions
     {
         public bool Error { get; set; }
-
         public Battlefield Battlefield { get; set; }
-
-        public bool ShowUI { get; set; }
+        public bool ShowUi { get; set; }
+        public int X { get; set; }
+        public int Y { get; set; }
+        public int Speed { get; set; }
+        public bool ShowRadar { get; set; }
 
         public RunOptions(string[] args)
         {
             // look for resolution arg
-            var xres = 800;
-            var yres = 800;
+            X = 800;
+            Y = 800;
             var arguments = args.ToList();
 
             if (arguments.Count() > 2)
             {
                 if (IsNumeric(arguments[0]) && IsNumeric(arguments[1]))
                 {
-                    xres = Convert.ToInt32(args[0]);
-                    yres = Convert.ToInt32(args[1]);
+                    X = Convert.ToInt32(args[0]);
+                    Y = Convert.ToInt32(args[1]);
                     arguments.RemoveAt(0);
                     arguments.RemoveAt(0);
                 }
@@ -40,11 +42,12 @@ namespace CSBot.Robots
             if (!string.IsNullOrEmpty(timeoutArgument))
                 timeout = Convert.ToInt32(timeoutArgument);
 
-            ShowUI = true;
-            if (ArgumentExists("-noui", arguments))
-                ShowUI = false;
-            /*
-show_radar = false
+            ShowUi = true;
+            if (ArgumentExists("-nogui", arguments))
+                ShowUi = false;
+
+            ShowRadar = false;
+    /*
 ARGV.grep( /^show_radar/ )do |item|
   show_radar = true
   ARGV.delete(item)
@@ -62,7 +65,7 @@ end*/
             }
 
 
-            Battlefield = new Battlefield(xres * 2, yres * 2, timeout, seed);
+            Battlefield = new Battlefield(X * 2, Y * 2, timeout, seed);
 
             var c = 0;
             var teamDivider = Math.Ceiling(Convert.ToDouble(arguments.Count / teams));

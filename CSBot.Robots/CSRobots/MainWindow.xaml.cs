@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Drawing.Imaging;
+using System.IO;
 using System.Reflection;
 using System.Timers;
 using System.Windows;
@@ -20,7 +23,7 @@ namespace CSRobots
                                                "#777777"
                                            };
 
-        private string _defaultSkinPrefix = "images/red_";
+        private string _defaultSkinPrefix = "images.red_";
         private IList<RobotAnimation> _robots = new List<RobotAnimation>();
         private IList<BulletAnimation> _bullets = new List<BulletAnimation>();
         private IList<ExplosionAnimation> _explosions = new List<ExplosionAnimation>();
@@ -61,17 +64,29 @@ namespace CSRobots
 
         public void InitCanvas()
         {
-            foreach (var robot in _battlefield.Robots)
+            /*foreach (var robot in _battlefield.Robots)
             {
                 var imagePath = robot.SkinPrefix ?? _defaultSkinPrefix;
-            }
-            var defaultColors = new int[8][];
+            }*/
+            var colors = new[]
+                             {
+                                 "x0",
+                                 "x1",
+                                 "x2",
+                                 "x3",
+                                 "x4",
+                                 "x5",
+                                 "x6",
+                                 "x7"
+                             };
+            var colorValues = new[] {6, 5, 3, 4, 1, 2, 0, 7};
+            
             for (var i = 0; i < 8; i++)
             {
-                defaultColors[i] = new int[3];
-                defaultColors[i][0] = i%2;
-                defaultColors[i][1] = Convert.ToInt32(Math.Floor(((decimal) i%4)/2));
-                defaultColors[i][2] = Convert.ToInt32(Math.Floor((decimal) i/4));
+                int c1 = colorValues[i] % 2;
+                int c2 = Convert.ToInt32(Math.Floor(((decimal)colorValues[i] % 4) / 2));
+                int c3 = Convert.ToInt32(Math.Floor((decimal)colorValues[i] / 4));
+                ModifyImageResource("CSRobots." + _defaultSkinPrefix + "body000.gif", c1, c2, c3, colors[i]);
             }
             /*
             [[0,1,1],[1,0,1],[1,1,0],[0,0,1],[1,0,0],[0,1,0],[0,0,0],[1,1,1]][0...@battlefield.robots.length].zip(@battlefield.robots) do |color, robot|
@@ -108,8 +123,49 @@ namespace CSRobots
             if (assembly == null) throw new Exception("Cannot get existing assembly.");
             var stream = assembly.GetManifestResourceStream(fileName);
             if (stream == null) throw new Exception("Cannot find requested resource: " + fileName);
-            var image = new BitmapImage {StreamSource = stream};
-            return image;
+            var image = Image.FromStream(stream);
+            
+            var ms = new MemoryStream();
+            image.Save(ms, ImageFormat.Jpeg);
+            var bImg = new BitmapImage();
+            bImg.BeginInit();
+            bImg.StreamSource = new MemoryStream(ms.ToArray());
+            bImg.EndInit();
+            return  new BitmapImage();
+        }
+
+        private static BitmapImage ModifyImageResource(string filename, int c1, int c2, int c3, string color)
+        {
+            var assembly = Assembly.GetExecutingAssembly();
+            if (assembly == null) throw new Exception("Cannot get existing assembly.");
+            var stream = assembly.GetManifestResourceStream(filename);
+            if (stream == null) throw new Exception("Cannot find requested resource: " + filename);
+            var buffer = new byte[1662];
+            var read = stream.Read(buffer, 0, 1662);
+            var ncolors = Math.Pow(2,
+                                   1 + Convert.ToInt32(buffer[10]&1) + Convert.ToInt32(buffer[10]&2) +
+                                   Convert.ToInt32(buffer[10]&4));
+            for (var j = 0;j<ncolors;j++)
+            {
+                var off = buffer[13 + j * 3];
+                var on = buffer[14 + j * 3];
+                buffer[13 + j * 3] = (c1 == 1) ? on : off;
+                buffer[14 + j * 3] = (c2 == 1) ? on : off;
+                buffer[15 + j * 3] = (c3 == 1) ? on : off;
+            }
+            var ms = new MemoryStream();
+            ms.Write(buffer,0,read);
+            var image = Image.FromStream(ms);
+            var ms2 = new MemoryStream();
+            image.Save(ms2, ImageFormat.Jpeg);
+            var bImg = new BitmapImage();
+            bImg.BeginInit();
+            bImg.StreamSource = new MemoryStream(ms2.ToArray());
+            bImg.EndInit();
+            //img is an Image control.
+            //img.Source = bImg;
+
+            return bImg;
         }
 
         /*def read_gif name, c1, c2, c3

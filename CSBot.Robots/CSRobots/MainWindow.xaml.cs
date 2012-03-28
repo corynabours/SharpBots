@@ -23,10 +23,8 @@ namespace CSRobots
                                                "#777777"
                                            };
 
-        private string _defaultSkinPrefix = "images.red_";
-        private IList<RobotAnimation> _robots = new List<RobotAnimation>();
-        private IList<BulletAnimation> _bullets = new List<BulletAnimation>();
-        private IList<ExplosionAnimation> _explosions = new List<ExplosionAnimation>();
+        private const string DefaultSkinPrefix = "images.red_";
+        private readonly IList<RobotAnimation> _robotImages = new List<RobotAnimation>();
         private readonly IList<BitmapImage> _explosionImages = new List<BitmapImage>();
         private const int SpeedMultiplier = 1;
 
@@ -68,40 +66,24 @@ namespace CSRobots
             {
                 var imagePath = robot.SkinPrefix ?? _defaultSkinPrefix;
             }*/
-            var colors = new[]
-                             {
-                                 "x0",
-                                 "x1",
-                                 "x2",
-                                 "x3",
-                                 "x4",
-                                 "x5",
-                                 "x6",
-                                 "x7"
-                             };
             var colorValues = new[] {6, 5, 3, 4, 1, 2, 0, 7};
-            
             for (var i = 0; i < 8; i++)
             {
                 int c1 = colorValues[i] % 2;
                 int c2 = Convert.ToInt32(Math.Floor(((decimal)colorValues[i] % 4) / 2));
                 int c3 = Convert.ToInt32(Math.Floor((decimal)colorValues[i] / 4));
-                ModifyImageResource("CSRobots." + _defaultSkinPrefix + "body000.gif", c1, c2, c3, colors[i]);
+                var bodies = new List<BitmapImage>();
+                var turrets = new List<BitmapImage>();
+                var radar = new List<BitmapImage>();
+                for (int j=0;j<36;j++)
+                {
+                    bodies.Add(ModifyImageResource("CSRobots." + DefaultSkinPrefix + "body" + j.ToString("D3") + ".gif", c1, c2, c3));
+                    turrets.Add(ModifyImageResource("CSRobots." + DefaultSkinPrefix + "turret" + j.ToString("D3") + ".gif", c1, c2, c3));
+                    radar.Add(ModifyImageResource("CSRobots." + DefaultSkinPrefix + "radar" + j.ToString("D3") + ".gif", c1, c2, c3));
+                }
+                _robotImages.Add(new RobotAnimation(bodies, turrets, radar));
             }
-            /*
-            [[0,1,1],[1,0,1],[1,1,0],[0,0,1],[1,0,0],[0,1,0],[0,0,0],[1,1,1]][0...@battlefield.robots.length].zip(@battlefield.robots) do |color, robot|
-              bodies, guns, radars = [], [], []
-              image_path = robot.skin_prefix || @default_skin_prefix
-              reader = robot.skin_prefix ? lambda{|fn| TkPhotoImage.new(:file => fn) } : lambda{|fn| read_gif(fn, *color)}
-              36.times do |i|
-                bodies << reader["#{image_path}body#{(i*10).to_s.rjust(3, '0')}.gif"]
-                guns << reader["#{image_path}turret#{(i*10).to_s.rjust(3, '0')}.gif"]
-                radars << reader["#{image_path}radar#{(i*10).to_s.rjust(3, '0')}.gif"]
-              end
-              @colors << TkRobot.new(bodies << bodies[0], guns << guns[0], radars << radars[0])
-            end
 
-             */
             for (var i = 0; i < 15; i++)
             {
                 try
@@ -119,32 +101,18 @@ namespace CSRobots
 
         private static BitmapImage GetEmbeddedImageResource(string fileName)
         {
-            var assembly = Assembly.GetExecutingAssembly();
-            if (assembly == null) throw new Exception("Cannot get existing assembly.");
-            var stream = assembly.GetManifestResourceStream(fileName);
-            if (stream == null) throw new Exception("Cannot find requested resource: " + fileName);
+            var stream = GetDataStreamFromEmbeddResource(fileName);
             var image = Image.FromStream(stream);
-            
-            var ms = new MemoryStream();
-            image.Save(ms, ImageFormat.Jpeg);
-            var bImg = new BitmapImage();
-            bImg.BeginInit();
-            bImg.StreamSource = new MemoryStream(ms.ToArray());
-            bImg.EndInit();
-            return  new BitmapImage();
+            return CreateBitmapImageFromImage(image);
         }
 
-        private static BitmapImage ModifyImageResource(string filename, int c1, int c2, int c3, string color)
+        private static BitmapImage ModifyImageResource(string filename, int c1, int c2, int c3)
         {
-            var assembly = Assembly.GetExecutingAssembly();
-            if (assembly == null) throw new Exception("Cannot get existing assembly.");
-            var stream = assembly.GetManifestResourceStream(filename);
-            if (stream == null) throw new Exception("Cannot find requested resource: " + filename);
+            var stream = GetDataStreamFromEmbeddResource(filename);
+
             var buffer = new byte[1662];
             var read = stream.Read(buffer, 0, 1662);
-            var ncolors = Math.Pow(2,
-                                   1 + Convert.ToInt32(buffer[10]&1) + Convert.ToInt32(buffer[10]&2) +
-                                   Convert.ToInt32(buffer[10]&4));
+            var ncolors = Math.Pow(2, 1 + Convert.ToInt32(buffer[10] & 7));
             for (var j = 0;j<ncolors;j++)
             {
                 var off = buffer[13 + j * 3];
@@ -155,32 +123,30 @@ namespace CSRobots
             }
             var ms = new MemoryStream();
             ms.Write(buffer,0,read);
-            var image = Image.FromStream(ms);
-            var ms2 = new MemoryStream();
-            image.Save(ms2, ImageFormat.Jpeg);
-            var bImg = new BitmapImage();
-            bImg.BeginInit();
-            bImg.StreamSource = new MemoryStream(ms2.ToArray());
-            bImg.EndInit();
-            //img is an Image control.
-            //img.Source = bImg;
 
-            return bImg;
+            var image = Image.FromStream(ms);
+            return CreateBitmapImageFromImage(image);
         }
 
-        /*def read_gif name, c1, c2, c3
-          data = nil
-          open(name, 'rb') do |f|
-            data = f.read()
-            ncolors = 2**(1 + data[10][0].to_i + data[10][1].to_i * 2 + data[10][2].to_i * 4)
-            ncolors.times do |j|
-              data[13 + j.to_i * 3 + 0], data[13 + j.to_i * 3 + 1], data[13 + j.to_i * 3 + 2] =
-                data[13 + j.to_i * 3 + c1.to_i], data[13 + j.to_i * 3 + c2.to_i], data[13 + j.to_i * 3 + c3.to_i]
-            end
-          end
-          TkPhotoImage.new(:data => Base64.encode64(data))
-        end*/
+        private static BitmapImage CreateBitmapImageFromImage(Image image)
+        {
+            var ms = new MemoryStream();
+            image.Save(ms, ImageFormat.Jpeg);
+            var bImg = new BitmapImage();
+            bImg.BeginInit();
+            bImg.StreamSource = new MemoryStream(ms.ToArray());
+            bImg.EndInit();
+            return new BitmapImage();
+        }
 
+        private static Stream GetDataStreamFromEmbeddResource(string fileName)
+        {
+            var assembly = Assembly.GetExecutingAssembly();
+            if (assembly == null) throw new Exception("Cannot get existing assembly.");
+            var stream = assembly.GetManifestResourceStream(fileName);
+            if (stream == null) throw new Exception("Cannot find requested resource: " + fileName);
+            return stream;
+        }
         private void DrawFrame()
         {
             Simulate(SpeedMultiplier);

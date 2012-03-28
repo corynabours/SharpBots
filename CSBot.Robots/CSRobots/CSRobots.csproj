@@ -39,6 +39,12 @@
     <StartupObject>CSRobots.Program</StartupObject>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="GalaSoft.MvvmLight.Extras.WPF4">
+      <HintPath>..\..\packages\MvvmLight.3.1.1\lib\net40\GalaSoft.MvvmLight.Extras.WPF4.dll</HintPath>
+    </Reference>
+    <Reference Include="GalaSoft.MvvmLight.WPF4">
+      <HintPath>..\..\packages\MvvmLight.3.1.1\lib\net40\GalaSoft.MvvmLight.WPF4.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -59,7 +65,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="RobotAnimation.cs" />
+    <Compile Include="EmbeddedImage.cs" />
+    <Compile Include="Robot.xaml.cs">
+      <DependentUpon>Robot.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="RobotColorImages.cs" />
+    <Compile Include="ThreadSafe.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -72,6 +83,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Robot.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Program.cs" />
@@ -102,6 +117,10 @@
     <ProjectReference Include="..\CSBot.Robots\CSBot.Robots.csproj">
       <Project>{DA961973-22A1-4F30-BE36-0535EA632D71}</Project>
       <Name>CSBot.Robots</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CSRobots.ViewModels\CSRobots.ViewModels.csproj">
+      <Project>{046AE40E-0182-4429-8AE6-5D27198E361C}</Project>
+      <Name>CSRobots.ViewModels</Name>
     </ProjectReference>
     <ProjectReference Include="..\SittingDuck\SittingDuck.csproj">
       <Project>{5E6603C0-EDD3-431F-909D-AD87647F048E}</Project>

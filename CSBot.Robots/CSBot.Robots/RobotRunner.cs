@@ -46,7 +46,7 @@ namespace CSBot.Robots
             get { return _actions; }
         }
 
-        private string Speech
+        public string Speech
         {
             get { return _speech; }
         }
@@ -57,17 +57,37 @@ namespace CSBot.Robots
             //set { .Robot.SkinPrefix = value; }
         }
 
-        internal double X
+        public double X
         {
             get { return _state.X; }
         }
 
-        internal double Y
+        public double Y
         {
             get { return _state.Y; }
         }
 
-        internal int Team
+        public double Heading
+        {
+            get { return _state.Heading; }
+        }
+
+        public double RadarHeading
+        {
+            get { return _state.RadarHeading; }
+        }
+
+        public double GunHeading
+        {
+            get { return _state.GunHeading; }
+        }
+
+        public int Size
+        {
+            get { return _state.Size; }
+        }
+
+        public int Team
         {
             get { return _state.Team; }
         }
@@ -106,7 +126,7 @@ namespace CSBot.Robots
             _state.X += Convert.ToDouble((random.NextDouble() - 0.5))*2*distanceX;
             _state.Y += Convert.ToDouble((random.NextDouble() - 0.5)*2*distanceY);
             _state.GunHeat = 3;
-            _state.Heading = (random.Next()*360);
+            _state.Heading = (random.NextDouble() * 360);
             _state.GunHeading = _state.Heading;
             _state.RadarHeading = _state.Heading;
         }

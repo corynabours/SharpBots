@@ -12,3 +12,4 @@ CSBot.Robots/CSRobots/obj/*
 CSBot.Robots/CSRobotsNoUI/obj/*
 *.user
 CSBot.Robots/SittingDuck/obj/*
+CSBot.Robots/CSRobots.ViewModels/obj/*

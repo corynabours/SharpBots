@@ -177,10 +177,10 @@ namespace CSBot.Robots
         {
             _actions = new Actions();
             if (Robot.Actions.Fire != 0) Actions.Fire = Clamp(Robot.Actions.Fire, FireMin, FireMax);
-            if (Math.Abs(Robot.Actions.Turn) <= 0.01) Actions.Turn = Clamp(Robot.Actions.Turn, TurnMin, TurnMax);
-            if (Math.Abs(Robot.Actions.TurnGun) <= 0.01)
+            if (Math.Abs(Robot.Actions.Turn) >= 0.01) Actions.Turn = Clamp(Robot.Actions.Turn, TurnMin, TurnMax);
+            if (Math.Abs(Robot.Actions.TurnGun) >= 0.01)
                 Actions.TurnGun = Clamp(Robot.Actions.TurnGun, TurnGunMin, TurnGunMax);
-            if (Math.Abs(Robot.Actions.TurnRadar) <= 0.01)
+            if (Math.Abs(Robot.Actions.TurnRadar) >= 0.01)
                 Actions.TurnRadar = Clamp(Robot.Actions.TurnRadar, TurnRadarMin, TurnRadarMax);
             if (Robot.Actions.Accelerate != 0)
                 Actions.Accelerate = Clamp(Robot.Actions.Accelerate, AccelerateMin, AccelerateMax);

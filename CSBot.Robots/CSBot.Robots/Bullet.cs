@@ -12,6 +12,16 @@ namespace CSBot.Robots
         private readonly RobotRunner _origin;
         private bool _dead;
 
+        public double X
+        {
+            get { return _x; }
+        }
+
+        public double Y
+        {
+            get { return _y; }
+        }
+
         internal decimal Energy
         {
             get { return _strength; }

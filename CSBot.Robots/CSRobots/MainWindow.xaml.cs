@@ -4,6 +4,7 @@ using System.Linq;
 using System.Timers;
 using System.Windows;
 using System.Windows.Media.Imaging;
+using System.Windows.Threading;
 using CSBot.Robots;
 
 namespace CSRobots
@@ -14,13 +15,14 @@ namespace CSRobots
         private readonly Battlefield _battlefield;
 
         private readonly IList<Robot> _robots = new List<Robot>();
+        private readonly IList<Bullet>  _bullets = new List<Bullet>();
         private readonly IList<BitmapSource> _explosionImages = new List<BitmapSource>();
         private const int SpeedMultiplier = 1;
 
         public MainWindow()
         {
             InitializeComponent();
-            _timer = new Timer {Interval = 20};
+            _timer = new Timer {Interval = 1};
             _timer.Elapsed += TimerElapsed;
             Height = Program.RunOptions.Y;
             Width = Program.RunOptions.X;
@@ -88,16 +90,31 @@ namespace CSRobots
 
         private void Simulate(int ticks)
         {
-            /*@explosions.reject!{|e,tko| @canvas.delete(tko) if e.dead; e.dead }
-    @bullets.reject!{|b,tko| @canvas.delete(tko) if b.dead; b.dead }
-    @robots.reject! do |ai,tko|
-      if ai.dead
-        tko.status.configure(:text => "#{ai.name.ljust(20)} dead")
-        tko.each{|part| @canvas.delete(part) if part != tko.status}
-        true
-      end
-    end*/
-            for (int index = 0; index < ticks; index++)
+            /*
+            @explosions.reject!{|e,tko| @canvas.delete(tko) if e.dead; e.dead }
+            @bullets.reject!{|b,tko| @canvas.delete(tko) if b.dead; b.dead }
+            */
+            for (var index = 0; index < _bullets.Count; index++ )
+            {
+                Bullet bullet = _bullets[index];
+                Dispatcher.Invoke(DispatcherPriority.Render,
+                                  new Action(() => Canvas.Children.Remove(bullet)));
+            }
+            for (var index = 0; index < _robots.Count; index++)
+            {
+                if (!_robots[index].Dead()) continue;
+                var robot = _robots[index];
+                _robots.RemoveAt(index);
+                Dispatcher.Invoke(DispatcherPriority.Render,
+                                  new Action(delegate
+                                                 {
+                                                     Canvas.Children.Remove(robot);
+                                                     //set displayed status to "Name (pad to 20) dead"
+                                                 }));
+            }
+
+
+            for (var index = 0; index < ticks; index++)
             {
                 if (_battlefield.GameOver)
                 {
@@ -120,6 +137,7 @@ namespace CSRobots
                 }
                 _battlefield.Tick();
             }
+
         }
 
         private void DrawBattlefield()
@@ -161,12 +179,10 @@ namespace CSRobots
         {
             foreach (var bullet in _battlefield.Bullets)
             {
-                /* @bullets[bullet] ||= TkcOval.new(
-                   @canvas, [-2, -2], [3, 3],
-                   :fill=>'#'+("%02x" % (128+bullet.energy*14).to_i)*3)
-                 @bullets[bullet].coords(
-                   bullet.x / 2 - 2, bullet.y / 2 - 2,
-                   bullet.x / 2 + 3, bullet.y / 2 + 3)*/
+                /*var newBullet = new Bullet(bullet);
+                Canvas.Children.Add(newBullet);
+                _bullets.Add(newBullet);
+                newBullet.Draw();*/
             }
         }
 

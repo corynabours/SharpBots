@@ -241,8 +241,9 @@ namespace CSBot.Robots
             _state.Speed += _actions.Accelerate;
             if (_state.Speed > 8) _state.Speed = 8;
             if (_state.Speed < -8) _state.Speed = -8;
-            _state.X += Math.Cos(ToRadians(_state.Heading))*_state.Speed;
-            _state.Y -= Math.Sin(ToRadians(_state.Heading))*_state.Speed;
+            var headingInRadians = ToRadians(_state.Heading);
+            _state.X += Math.Cos(headingInRadians) * _state.Speed;
+            _state.Y -= Math.Sin(headingInRadians) * _state.Speed;
             if (_state.X - _state.Size < 0) _state.X = _state.Size;
             if (_state.Y - _state.Size < 0) _state.Y = _state.Size;
             if (_state.X + _state.Size >= _battlefield.Width) _state.X = _battlefield.Width - _state.Size;
@@ -251,7 +252,7 @@ namespace CSBot.Robots
 
         private double ToRadians(double heading)
         {
-            return heading*Math.PI/360;
+            return heading*Math.PI/180;
         }
 
         private void Scan()
@@ -261,18 +262,16 @@ namespace CSBot.Robots
                 if ((other != this) && (!other.Dead()))
                 {
                     double a = GetAngleToOther(other);
-                    if (Math.Abs(a) <= 0.01)
+                    if ((_oldRadarHeading <= a && a <= _newRadarHeading) ||
+                        (_oldRadarHeading >= a && a >= _newRadarHeading) ||
+                        (_oldRadarHeading <= a + 360 && a + 360 <= _newRadarHeading) ||
+                        (_oldRadarHeading >= a + 360 && a + 360 >= _newRadarHeading) ||
+                        (_oldRadarHeading <= a - 360 && a - 360 <= _newRadarHeading) ||
+                        (_oldRadarHeading >= a - 360 && a - 360 >= _newRadarHeading))
                     {
-                        if ((_oldRadarHeading <= a && a <= _newRadarHeading) ||
-                            (_oldRadarHeading >= a && a >= _newRadarHeading) ||
-                            (_oldRadarHeading <= a + 360 && a + 360 <= _newRadarHeading) ||
-                            (_oldRadarHeading >= a + 360 && a + 360 >= _newRadarHeading) ||
-                            (_oldRadarHeading <= a - 360 && a - 360 <= _newRadarHeading) ||
-                            (_oldRadarHeading >= a - 360 && a - 360 >= _newRadarHeading))
-                        {
-                            _events.RobotsScanned.Add(Hypotenuse(_state.Y - other.Y, other.X - _state.X));
-                        }
+                        _events.RobotsScanned.Add(Hypotenuse(_state.Y - other.Y, other.X - _state.X));
                     }
+
                 }
             }
         }

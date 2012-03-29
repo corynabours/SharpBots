@@ -17,6 +17,11 @@ namespace CSRobots
             _bullet = bullet;
         }
 
+        public bool Dead
+        {
+            get { return _bullet.Dead; }
+        }
+
         public void Draw()
         {
             Dispatcher.Invoke(DispatcherPriority.Render,

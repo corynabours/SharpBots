@@ -6,7 +6,7 @@
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{10AB251F-7F37-4291-A086-AC219B6585F9}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>CSRobots</RootNamespace>
     <AssemblyName>CSRobots</AssemblyName>
@@ -69,12 +69,19 @@
       <DependentUpon>Bullet.xaml</DependentUpon>
     </Compile>
     <Compile Include="EmbeddedImage.cs" />
+    <Compile Include="Explosion.xaml.cs">
+      <DependentUpon>Explosion.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Robot.xaml.cs">
       <DependentUpon>Robot.xaml</DependentUpon>
     </Compile>
     <Compile Include="RobotColorImages.cs" />
     <Compile Include="ThreadSafe.cs" />
     <Page Include="Bullet.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Explosion.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -128,6 +135,10 @@
     <ProjectReference Include="..\CSRobots.ViewModels\CSRobots.ViewModels.csproj">
       <Project>{046AE40E-0182-4429-8AE6-5D27198E361C}</Project>
       <Name>CSRobots.ViewModels</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NervousDuck\NervousDuck.csproj">
+      <Project>{EDD03EA6-EEA7-49F1-815C-01BBEA670F54}</Project>
+      <Name>NervousDuck</Name>
     </ProjectReference>
     <ProjectReference Include="..\SittingDuck\SittingDuck.csproj">
       <Project>{5E6603C0-EDD3-431F-909D-AD87647F048E}</Project>

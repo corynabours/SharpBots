@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using CSBot.Robots;
@@ -76,17 +77,18 @@ namespace CSRobots
             Console.WriteLine("");
             if (battlefield.Robots.Count > battlefield.Teams)
             {
-                /* teams = battlefield.teams.find_all{|name,team| !team.all?{|robot| robot.dead} }
-            puts "winner_is:     { #{
-              teams.map do |name,team|
-                "Team #{name}: [#{team.join(', ')}]"
-              end.join(', ')
-            } }"
-            puts "winner_energy: { #{
-              teams.map do |name,team|
-                "Team #{name}: [#{team.map do |w| ('%.1f' % w.energy) end.join(', ')}]"
-              end.join(', ')
-            } }"*/
+                var winningTeams = new List<int>();
+                foreach (var robot in winners.Where(robot => !winningTeams.Contains(robot.Team)))
+                    winningTeams.Add(robot.Team);
+                foreach (var winningTeam in winningTeams)
+                {
+                    var teamNum = "Team #" + winningTeam.ToString(CultureInfo.InvariantCulture);
+                    var teamMembers = battlefield.Robots.Where(robot => robot.Team == winningTeam).ToList();
+                    var winningTeamNames = GetNames(teamMembers);
+                    var winningTeamEnergies = GetEnergies(teamMembers);
+                    Console.WriteLine("winner_is:     { " + teamNum + ": " + winningTeamNames + "}");
+                    Console.WriteLine("winner_energy: { " + teamNum + ": " + winningTeamEnergies + "}");
+                }
             }
             else
             {

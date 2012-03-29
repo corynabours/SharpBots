@@ -13,6 +13,14 @@
         <Binding Source="{StaticResource Locator}" Path="MainView" />
     </Window.DataContext>
     <Canvas Background="Black" Name="Canvas">
-        
+        <TextBlock Name="Robot0" Canvas.Top="5" Canvas.Left="5" />
+        <TextBlock Name="Robot1" Canvas.Top="15" Canvas.Left="5" />
+        <TextBlock Name="Robot2" Canvas.Top="25" Canvas.Left="5" />
+        <TextBlock Name="Robot3" Canvas.Top="35" Canvas.Left="5" />
+        <TextBlock Name="Robot4" Canvas.Top="45" Canvas.Left="5" />
+        <TextBlock Name="Robot5" Canvas.Top="55" Canvas.Left="5" />
+        <TextBlock Name="Robot6" Canvas.Top="65" Canvas.Left="5" />
+        <TextBlock Name="Robot7" Canvas.Top="75" Canvas.Left="5" />
+        <TextBlock Name="GameOver" Canvas.Top="400" Canvas.Left="400" TextAlignment="Center" FontSize="36" Foreground="White"/>
     </Canvas>
 </Window>

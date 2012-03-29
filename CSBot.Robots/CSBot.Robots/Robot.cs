@@ -2,7 +2,7 @@
 
 namespace CSBot.Robots
 {
-    public class Robot
+    public abstract class Robot
     {
         public Actions Actions { get; internal set; }
         public Events Events { get; internal set; }
@@ -147,13 +147,11 @@ namespace CSBot.Robots
             get { return State.Y; }
         }
 
-        public virtual void Tick(Events events)
-        {
-        }
+        public abstract void Tick(Events events);
 
-        public virtual string Name
+        public abstract string Name
         {
-            get { return "Unnamed"; }
+            get;
         }
     }
 }

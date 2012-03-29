@@ -58,14 +58,14 @@ namespace CSBot.Robots
                 }
         }
 
-        internal bool Dead
+        public bool Dead
         {
             get { return _dead; }
         }
 
         private double ToRadians(double heading)
         {
-            return heading * Math.PI / 360;
+            return heading * Math.PI / 180;
         }
 
         private double Hypotenuse(double a, double b)

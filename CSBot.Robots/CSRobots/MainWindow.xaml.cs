@@ -1,28 +1,29 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Timers;
-using System.Windows;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 using CSBot.Robots;
 
 namespace CSRobots
 {
-    public partial class MainWindow : Window
+    public partial class MainWindow
     {
         private readonly Timer _timer;
         private readonly Battlefield _battlefield;
 
         private readonly IList<Robot> _robots = new List<Robot>();
         private readonly IList<Bullet>  _bullets = new List<Bullet>();
+        private readonly IList<Explosion> _explosions = new List<Explosion>();
         private readonly IList<BitmapSource> _explosionImages = new List<BitmapSource>();
         private const int SpeedMultiplier = 1;
 
         public MainWindow()
         {
             InitializeComponent();
-            _timer = new Timer {Interval = 1};
+            _timer = new Timer {Interval = 5};
             _timer.Elapsed += TimerElapsed;
             Height = Program.RunOptions.Y;
             Width = Program.RunOptions.X;
@@ -38,12 +39,21 @@ namespace CSRobots
         // def on_game_over(&block)
         //     @on_game_over_handlers << block
         // end
+        private static bool _inTimer;
+        private int _gameOverTicks;
 
         private void TimerElapsed(object sender, ElapsedEventArgs e)
         {
             try
             {
-                DrawFrame();
+                if (_inTimer) return;
+                _inTimer = true;
+                Dispatcher.Invoke(DispatcherPriority.Render,new Action(DrawFrame));
+                if (_gameOverTicks == 50)
+                {
+                    Dispatcher.Invoke(DispatcherPriority.Render,new Action(Close));
+                }
+                _inTimer = false;
             }
             catch (Exception ex)
             {
@@ -60,9 +70,10 @@ namespace CSRobots
                 robotImages.Add(new RobotColorImages(i));
             }
 
+            var index = 0;
             foreach(var robot in _battlefield.Robots)
             {
-                var displayRobot = new Robot(robot, robotImages[robot.Team]);
+                var displayRobot = new Robot(robot, robotImages[robot.Team], index++);
                 _robots.Add(displayRobot);
                 Canvas.Children.Add(displayRobot);
             }
@@ -90,54 +101,63 @@ namespace CSRobots
 
         private void Simulate(int ticks)
         {
-            /*
-            @explosions.reject!{|e,tko| @canvas.delete(tko) if e.dead; e.dead }
-            @bullets.reject!{|b,tko| @canvas.delete(tko) if b.dead; b.dead }
-            */
-            for (var index = 0; index < _bullets.Count; index++ )
+            var explosionRemovals = new List<Explosion>();
+            foreach (var explosion in _explosions.Where(explosion => explosion.Dead))
             {
-                Bullet bullet = _bullets[index];
-                Dispatcher.Invoke(DispatcherPriority.Render,
-                                  new Action(() => Canvas.Children.Remove(bullet)));
+                Canvas.Children.Remove(explosion);
+                explosionRemovals.Add(explosion);
             }
+            foreach(var explosion in explosionRemovals) _explosions.Remove(explosion);
+
+            var bulletRemovals = new List<Bullet>();
+            foreach (var bullet in _bullets.Where(bullet => bullet.Dead))
+            {
+                Canvas.Children.Remove(bullet);
+                bulletRemovals.Add(bullet);
+            }
+            foreach (var bullet in bulletRemovals) _bullets.Remove(bullet);
+            var statusText = new[] {Robot0, Robot1, Robot2, Robot3, Robot4, Robot5, Robot6, Robot7};
+
             for (var index = 0; index < _robots.Count; index++)
             {
                 if (!_robots[index].Dead()) continue;
                 var robot = _robots[index];
                 _robots.RemoveAt(index);
-                Dispatcher.Invoke(DispatcherPriority.Render,
-                                  new Action(delegate
-                                                 {
-                                                     Canvas.Children.Remove(robot);
-                                                     //set displayed status to "Name (pad to 20) dead"
-                                                 }));
+                Canvas.Children.Remove(robot);
+                statusText[robot.Index].Text= robot.RobotName.PadRight(20,' ') + "dead";
             }
-
 
             for (var index = 0; index < ticks; index++)
             {
                 if (_battlefield.GameOver)
                 {
-                    /*@on_game_over_handlers.each{|h| h.call(@battlefield) }
-        unless @game_over
-          winner = @robots.keys.first
-          whohaswon = if winner.nil?
-            "Draw!"
-          elsif @battlefield.teams.all?{|k,t|t.size<2}
-            "#{winner.name} won!"
-          else
-            "Team #{winner.team} won!"
-          end
-          text_color = winner ? winner.team : 7
-          @game_over = TkcText.new(canvas,
-            :fill => @text_colors[text_color],
-            :anchor => 'c', :coords => [400,400], :font=>'courier 36', :justify => 'center',
-            :text => "GAME OVER\n#{whohaswon}")
-        end*/
+                    _gameOverTicks++;
+                    var winners = _battlefield.Robots.Where(robot => !robot.Dead()).ToList();
+                    if (winners.Count == 0)
+                    {
+                        DisplayDraw();
+                        return;
+                    }
+
+                    var team = winners[0].Team;
+                    var draw = _battlefield.Robots.Any(robot => !robot.Dead() && (robot.Team != team));
+
+                    if (draw)
+                    {
+                        DisplayDraw();
+                        return;
+                    }
+
+                    GameOver.Text = "Team #" + team.ToString(CultureInfo.InvariantCulture) + " won!";
                 }
                 _battlefield.Tick();
             }
 
+        }
+
+        private void DisplayDraw()
+        {
+            GameOver.Text="Draw!";
         }
 
         private void DrawBattlefield()
@@ -154,10 +174,12 @@ namespace CSRobots
 
         private void DrawRobots()
         {
+            var statusText = new[] { Robot0, Robot1, Robot2, Robot3, Robot4, Robot5, Robot6, Robot7 };
             foreach (var robot in _robots.Where(robot => !robot.Dead()))
             {
                 robot.Draw();
-        //        @robots[ai].status.configure(:text => "#{ai.name.ljust(20)} #{'%.1f' % ai.energy}")*/
+                statusText[robot.Index].Text = robot.RobotName.PadRight(20, ' ') + robot.Energy.ToString(CultureInfo.InvariantCulture);
+                statusText[robot.Index].Foreground = robot.Color;
                 draw_radar(robot);
             }
         }
@@ -177,21 +199,38 @@ namespace CSRobots
 
         private void DrawBullets()
         {
-            foreach (var bullet in _battlefield.Bullets)
+            foreach (var bullet in _bullets)
             {
-                /*var newBullet = new Bullet(bullet);
+                bullet.Draw();
+            }
+
+            var bullets = new List<CSBot.Robots.Bullet>(_battlefield.NewBullets);
+            foreach (var bullet in bullets)
+            {
+                var newBullet = new Bullet(bullet);
                 Canvas.Children.Add(newBullet);
                 _bullets.Add(newBullet);
-                newBullet.Draw();*/
+                _battlefield.Process(bullet);
+                newBullet.Draw();
             }
         }
 
         private void DrawExplosions()
         {
-            foreach (var explosion in _battlefield.Explosions)
+            foreach (var explosion in _explosions)
             {
-                //@explosions[explosion] ||= TkcImage.new(@canvas, explosion.x / 2, explosion.y / 2)
-                //@explosions[explosion].image(boom[explosion.t])
+                explosion.Draw();
+            }
+
+            var explosions = new List<CSBot.Robots.Explosion>(_battlefield.NewExplosions);
+            foreach (var explosion in explosions)
+            {
+                var newExplosion = new Explosion(explosion, _explosionImages);
+                _explosions.Add(newExplosion);
+                Canvas.Children.Add(newExplosion);
+                _battlefield.Process(explosion);
+                newExplosion.Draw();
+                
             }
         }
     }

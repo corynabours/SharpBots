@@ -39,6 +39,21 @@ namespace CSRobots
             get { return _index; }
         }
 
+        public double RadarHeading
+        {
+            get { return _robot.RadarHeading; }
+        }
+
+        public double X
+        {
+            get { return _robot.X; }
+        }
+
+        public double Y
+        {
+            get { return _robot.Y; }
+        }
+
         internal void Draw()
         {
             var heading = _robot.Heading;

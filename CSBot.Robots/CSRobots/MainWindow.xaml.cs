@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Linq;
 using System.Timers;
 using System.Windows.Media.Imaging;
+using System.Windows.Shapes;
 using System.Windows.Threading;
 using CSBot.Robots;
 
@@ -17,7 +18,9 @@ namespace CSRobots
         private readonly IList<Robot> _robots = new List<Robot>();
         private readonly IList<Bullet>  _bullets = new List<Bullet>();
         private readonly IList<Explosion> _explosions = new List<Explosion>();
+        private readonly IList<Line> _radarLines = new List<Line>(); 
         private readonly IList<BitmapSource> _explosionImages = new List<BitmapSource>();
+        private readonly bool _showRadar; 
         private const int SpeedMultiplier = 1;
 
         public MainWindow()
@@ -28,17 +31,12 @@ namespace CSRobots
             Height = Program.RunOptions.Y;
             Width = Program.RunOptions.X;
             _battlefield = Program.RunOptions.Battlefield;
-            // @on_game_over_handlers = []
-            // @radar_lines = []
-            // @show_radar = false
+            _showRadar = false;
             InitCanvas();
             DrawFrame();
             _timer.Enabled = true;
         }
 
-        // def on_game_over(&block)
-        //     @on_game_over_handlers << block
-        // end
         private static bool _inTimer;
         private int _gameOverTicks;
 
@@ -118,6 +116,12 @@ namespace CSRobots
             foreach (var bullet in bulletRemovals) _bullets.Remove(bullet);
             var statusText = new[] {Robot0, Robot1, Robot2, Robot3, Robot4, Robot5, Robot6, Robot7};
 
+            foreach (var line in _radarLines)
+            {
+                Canvas.Children.Remove(line);
+            }
+            _radarLines.Clear();
+
             for (var index = 0; index < _robots.Count; index++)
             {
                 if (!_robots[index].Dead()) continue;
@@ -180,21 +184,21 @@ namespace CSRobots
                 robot.Draw();
                 statusText[robot.Index].Text = robot.RobotName.PadRight(20, ' ') + robot.Energy.ToString(CultureInfo.InvariantCulture);
                 statusText[robot.Index].Foreground = robot.Color;
-                draw_radar(robot);
+                DrawRadar(robot);
             }
         }
 
-        private void draw_radar(Robot robot)
+        private void DrawRadar(Robot robot)
         {
-            /*if (show_radar)
-            {
-                 angle = robot.radar_heading
-                 x = robot.x + (Math.cos(angle * Math::PI/180) * 3200)
-                 y = robot.y - (Math.sin(angle * Math::PI/180) * 3200)
-                 radar_line = TkcLine.new(@canvas, robot.x/2, robot.y/2, x/2, y/2)
-                 radar_line.fill @text_colors[robot.team]
-                 @radar_lines << radar_line
-            }*/
+            if (!_showRadar) return;
+            var angle = robot.RadarHeading;
+            var x = robot.X + (Math.Cos(angle*Math.PI/180)*3200);
+            var y = robot.Y - (Math.Sin(angle*Math.PI/180)*3200);
+            var radarLine = new Line {X1 = robot.X/2, Y1 = robot.Y/2, X2 = x/2, Y2 = y/2};
+            _radarLines.Add(radarLine);
+            //radar_line = TkcLine.new(@canvas, robot.x/2, robot.y/2, x/2, y/2)
+            //radar_line.fill @text_colors[robot.team]
+            //@radar_lines << radar_line
         }
 
         private void DrawBullets()
@@ -226,11 +230,10 @@ namespace CSRobots
             foreach (var explosion in explosions)
             {
                 var newExplosion = new Explosion(explosion, _explosionImages);
-                _explosions.Add(newExplosion);
                 Canvas.Children.Add(newExplosion);
+                _explosions.Add(newExplosion);
                 _battlefield.Process(explosion);
                 newExplosion.Draw();
-                
             }
         }
     }

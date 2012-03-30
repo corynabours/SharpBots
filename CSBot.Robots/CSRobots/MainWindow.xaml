@@ -22,5 +22,6 @@
         <TextBlock Name="Robot6" Canvas.Top="65" Canvas.Left="5" />
         <TextBlock Name="Robot7" Canvas.Top="75" Canvas.Left="5" />
         <TextBlock Name="GameOver" Canvas.Top="400" Canvas.Left="400" TextAlignment="Center" FontSize="36" Foreground="White"/>
+        
     </Canvas>
 </Window>

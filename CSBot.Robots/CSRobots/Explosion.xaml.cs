@@ -2,34 +2,20 @@
 using System.Windows.Controls;
 using System;
 using System.Windows.Media.Imaging;
+using System.Windows.Threading;
 
 namespace CSRobots
 {
-    /// <summary>
-    /// Interaction logic for Explosion.xaml
-    /// </summary>
-    public partial class Explosion : UserControl
+    public partial class Explosion
     {
         private readonly CSBot.Robots.Explosion _explosion;
         private readonly IList<BitmapSource> _explosionImages;
 
-        public Explosion(CSBot.Robots.Explosion explosion)
+        public Explosion(CSBot.Robots.Explosion explosion, IList<BitmapSource> explosionImages)
         {
             InitializeComponent();
             _explosion = explosion;
-        }
-
-        public Explosion(CSBot.Robots.Explosion explosion, IList<BitmapSource> explosionImages)
-        {
-            _explosion = explosion;
             _explosionImages = explosionImages;
-            Loaded += ExplosionLoaded;
-        }
-
-        void ExplosionLoaded(object sender, System.Windows.RoutedEventArgs e)
-        {
-            if (Boom != null)
-                Boom.Source = _explosionImages[_explosion.T];      
         }
 
         public bool Dead    
@@ -39,12 +25,14 @@ namespace CSRobots
 
         internal void Draw()
         {
-            if (Boom != null)
-                Boom.Source = _explosionImages[_explosion.T];
-            Canvas.SetTop(this, Convert.ToDouble(_explosion.Y - _explosion.Size) / 2);
-            Canvas.SetLeft(this, Convert.ToDouble(_explosion.X - _explosion.Size) / 2);
+            Dispatcher.Invoke(DispatcherPriority.Render,
+                              new Action(delegate
+                                             {
+                                                 if ((Boom != null)&&(_explosion.T<15))
+                                                     Boom.Source = _explosionImages[_explosion.T];
+                                                 Canvas.SetTop(this, Convert.ToDouble(_explosion.Y - _explosion.Size)/2);
+                                                 Canvas.SetLeft(this, Convert.ToDouble(_explosion.X - _explosion.Size)/2);
+                                             }));
         }
-
-        
     }
 }

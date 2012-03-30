@@ -4,9 +4,6 @@ using System.Windows.Threading;
 
 namespace CSRobots
 {
-    /// <summary>
-    /// Interaction logic for Bullet.xaml
-    /// </summary>
     public partial class Bullet
     {
         private readonly CSBot.Robots.Bullet _bullet;

@@ -43,14 +43,14 @@ namespace CSRobots.ViewModels
         public int Height
         {
             get { return _height; }
-            set {SetStructPropertyValue(ref _height, value);}
+            set { SetPropertyValue(out _height, value); }
         }
 
         private int _width;
         public int Width
         {
             get { return _width; }
-            set {SetStructPropertyValue(ref _width, value);}
+            set { SetPropertyValue(out _width, value); }
         }
 
         private static bool _inTimer;
@@ -182,7 +182,7 @@ namespace CSRobots.ViewModels
         public string GameOver
         {
             get { return _gameOver; }
-            set {SetStructPropertyValue(ref _gameOver, value);}
+            set {SetPropertyValue(out _gameOver, value);}
         }
 
         private void DisplayDraw()
@@ -297,14 +297,14 @@ namespace CSRobots.ViewModels
         public ObservableCollection<RobotView> Bots
         {
             get { return _bots; }
-            set {SetPropertyValue(ref _bots, value);}
+            set { SetPropertyValue(out _bots, value); }
         }
 
         private ObservableCollection<BulletView> _bullets = new ObservableCollection<BulletView>();
         public ObservableCollection<BulletView> Bullets
         {
             get { return _bullets; }
-            set {SetStructPropertyValue(ref _bullets, value);}
+            set { SetPropertyValue(out _bullets, value); }
         }
 
         private ObservableCollection<ExplosionView> _explosions = new ObservableCollection<ExplosionView>();
@@ -312,17 +312,14 @@ namespace CSRobots.ViewModels
         public ObservableCollection<ExplosionView> Explosions
         {
             get { return _explosions; }
-            set { SetStructPropertyValue(ref _explosions, value); }
+            set { SetPropertyValue(out _explosions, value); }
         }
 
         private ObservableCollection<RobotStatus> _status = new ObservableCollection<RobotStatus>();
         public ObservableCollection<RobotStatus> Status
         {
             get { return _status; }
-            set {SetStructPropertyValue(ref _status, value);}
+            set { SetPropertyValue(out _status, value); }
         }
-
-        protected override void RegisterForMessages() {}
-        protected override void SetDesignTimeInfo() {}
     }
 }

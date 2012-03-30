@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 
 namespace CSRobots.ViewModels
 {
@@ -9,6 +10,8 @@ namespace CSRobots.ViewModels
         public BulletView(CSBot.Robots.Bullet bullet)
         {
             _bullet = bullet;
+//           :fill=>'#'+("%02x" % (128+bullet.energy*14).to_i)*3)
+            _color = new SolidBrush(new Color());
         }
 
         public bool Dead
@@ -20,14 +23,14 @@ namespace CSRobots.ViewModels
         public int Top
         {
             get { return _top; }
-            set { SetStructPropertyValue(ref _top, value);}
+            set { SetPropertyValue(out _top, value); }
         }
 
         private int _left;
         public int Left
         {
             get { return _left; }
-            set { SetStructPropertyValue(ref _left, value);}
+            set { SetPropertyValue(out _left, value); }
         }
 
         public void Draw()
@@ -36,14 +39,11 @@ namespace CSRobots.ViewModels
             Left = Convert.ToInt32((_bullet.X) / 2);
         }
 
-        /* @bullets[bullet] ||= TkcOval.new(
-           @canvas, [-2, -2], [3, 3],
-           :fill=>'#'+("%02x" % (128+bullet.energy*14).to_i)*3)
-         @bullets[bullet].coords(
-           bullet.x / 2 - 2, bullet.y / 2 - 2,
-           bullet.x / 2 + 3, bullet.y / 2 + 3)*/
-
-        protected override void RegisterForMessages(){}
-        protected override void SetDesignTimeInfo(){}
+        private Brush _color;
+        public Brush Color
+        {
+            get { return _color; }
+            set { SetPropertyValue(out _color, value); }
+        }
     }
 }

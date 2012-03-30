@@ -33,7 +33,7 @@ namespace CSRobots.ViewModels
         public BitmapSource BoomImage
         {
             get { return _boomImage; }
-            set {SetStructPropertyValue(ref _boomImage, value);}
+            set { SetPropertyValue(out _boomImage, value); }
         }
 
         private int _left;
@@ -42,7 +42,7 @@ namespace CSRobots.ViewModels
             get { return _left; }
             set
             {
-                SetStructPropertyValue(ref _left, value);
+                SetPropertyValue(out _left, value);
             }
         }
 
@@ -52,11 +52,8 @@ namespace CSRobots.ViewModels
             get { return _top; }
             set
             {
-                SetStructPropertyValue(ref _top, value);
+                SetPropertyValue(out _top, value);
             }
         }
-
-        protected override void RegisterForMessages(){}
-        protected override void SetDesignTimeInfo(){}
     }
 }

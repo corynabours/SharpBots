@@ -11,9 +11,6 @@ namespace CSRobots.ViewModels
         private readonly RobotColorImages _images;
         private readonly int _index;
 
-        protected override void RegisterForMessages() {}
-        protected override void SetDesignTimeInfo() {}
-
         internal RobotView(RobotRunner robot, RobotColorImages images, int index)
         {
             _robot = robot;
@@ -31,7 +28,7 @@ namespace CSRobots.ViewModels
             get { return _left; }
             set
             {
-                SetStructPropertyValue(ref _left, value);
+                SetPropertyValue(out _left, value);
             }
         }
 
@@ -41,7 +38,7 @@ namespace CSRobots.ViewModels
             get { return _top; }
             set
             {
-                SetStructPropertyValue(ref _top, value);
+                SetPropertyValue(out _top, value);
             }
         }
 
@@ -49,7 +46,7 @@ namespace CSRobots.ViewModels
         public string RobotName
         {
             get { return _robotName; }
-            set { SetStructPropertyValue(ref _robotName, value);}
+            set { SetPropertyValue(out _robotName, value); }
         }
 
         public decimal Energy
@@ -71,7 +68,7 @@ namespace CSRobots.ViewModels
         public int RadarHeading
         {
             get { return _radarHeading; }
-            set { SetStructPropertyValue(ref _radarHeading, value);}
+            set { SetPropertyValue(out _radarHeading, value); }
         }
 
         public double X
@@ -88,21 +85,21 @@ namespace CSRobots.ViewModels
         public BitmapSource BodyImage
         {
             get { return _bodyImage; }
-            set {SetStructPropertyValue(ref _bodyImage, value);}
+            set { SetPropertyValue(out _bodyImage, value); }
         }
 
         private BitmapSource _turretImage;
         public BitmapSource TurretImage
         {
             get { return _turretImage; }
-            set { SetStructPropertyValue(ref _turretImage, value); }
+            set { SetPropertyValue(out _turretImage, value); }
         }
 
         private BitmapSource _radarImage;
         public BitmapSource RadarImage
         {
             get { return _radarImage; }
-            set { SetStructPropertyValue(ref _radarImage, value); }
+            set { SetPropertyValue(out _radarImage, value); }
         }
 
 
@@ -110,14 +107,14 @@ namespace CSRobots.ViewModels
         public int BodyHeading
         {
             get { return _bodyHeading; }
-            set { SetStructPropertyValue(ref _bodyHeading, value);}
+            set { SetPropertyValue(out _bodyHeading, value); }
         }
 
         private int _turretHeading;
         public int TurretHeading
         {
             get { return _turretHeading; }
-            set { SetStructPropertyValue(ref _turretHeading, value); }
+            set { SetPropertyValue(out _turretHeading, value); }
         }
 
         internal void Draw()
@@ -136,12 +133,12 @@ namespace CSRobots.ViewModels
         public string Speech
         {
             get { return _speech; }
-            set { SetStructPropertyValue(ref _speech, value); }
+            set { SetPropertyValue(out _speech, value); }
         }
 
         private string _health;
         public string Health { get { return _health; }
-            set {SetStructPropertyValue(ref _health, value); }
+            set { SetPropertyValue(out _health, value); }
         }
 
         public bool Dead()

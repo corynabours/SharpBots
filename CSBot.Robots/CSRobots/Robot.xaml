@@ -6,7 +6,11 @@
              mc:Ignorable="d" Height="80" Width="60">
     <Canvas Width="60" Height="60">
         <TextBlock Name="Speech" Canvas.Top="0" Canvas.Left="0" />
-        <Image Name="Body" Width="60" Height="50" Canvas.Top="10" Canvas.Left="0"/>
+        <Image Name="Body" Width="60" Height="50" Canvas.Top="10" Canvas.Left="0">
+            <Image.LayoutTransform>
+                <RotateTransform Angle="0"/>
+            </Image.LayoutTransform>
+        </Image>
         <Image Name="Turret" Width="60" Height="50" Canvas.Top="10" Canvas.Left="0"/>
         <Image Name="Radar" Width="60" Height="50" Canvas.Top="10" Canvas.Left="0"/>
         <TextBlock Name="Name" Canvas.Top="60" Canvas.Left="0" />

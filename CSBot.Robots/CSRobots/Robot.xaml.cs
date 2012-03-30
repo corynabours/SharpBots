@@ -63,6 +63,8 @@ namespace CSRobots
             heading = _robot.RadarHeading;
             var radarIndex = Convert.ToInt32(Math.Floor(heading/10));
             Body.Source = _images.Bodies[headingIndex];
+            //Body.Source = _images.Bodies[0];
+            //Body.LayoutTransform.
             Turret.Source = _images.Turrets[turretIndex];
             Radar.Source = _images.Radars[radarIndex];
             Canvas.SetTop(this, (_robot.Y - _robot.Size)/2);

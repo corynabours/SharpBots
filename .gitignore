@@ -14,3 +14,7 @@ CSBot.Robots/CSRobotsNoUI/obj/*
 CSBot.Robots/SittingDuck/obj/*
 CSBot.Robots/CSRobots.ViewModels/obj/*
 CSBot.Robots/NervousDuck/obj/*
+TheBots/_ReSharper.TheBots/*
+TheBots/TheBots/bin/*
+TheBots/TheBots/obj/*
+TheBots/TheBots.ncrunchsolution

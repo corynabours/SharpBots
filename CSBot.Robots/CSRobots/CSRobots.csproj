@@ -68,14 +68,12 @@
     <Compile Include="Bullet.xaml.cs">
       <DependentUpon>Bullet.xaml</DependentUpon>
     </Compile>
-    <Compile Include="EmbeddedImage.cs" />
     <Compile Include="Explosion.xaml.cs">
       <DependentUpon>Explosion.xaml</DependentUpon>
     </Compile>
     <Compile Include="Robot.xaml.cs">
       <DependentUpon>Robot.xaml</DependentUpon>
     </Compile>
-    <Compile Include="RobotColorImages.cs" />
     <Compile Include="ThreadSafe.cs" />
     <Page Include="Bullet.xaml">
       <SubType>Designer</SubType>

@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Drawing;
-using System.Drawing.Imaging;
 using System.IO;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Media.Imaging;
 
-namespace CSRobots
+namespace CSRobots.ViewModels
 {
     public class EmbeddedImage
     {
@@ -36,10 +35,10 @@ namespace CSRobots
             }
             var ms = new MemoryStream();
             ms.Write(buffer, 0, read);
-            
+
             var bitmap = new Bitmap(ms);
             bitmap.MakeTransparent();
-            var bmSource = System.Windows.Interop.Imaging.CreateBitmapSourceFromHBitmap(bitmap.GetHbitmap(),IntPtr.Zero,Int32Rect.Empty,BitmapSizeOptions.FromEmptyOptions());
+            var bmSource = System.Windows.Interop.Imaging.CreateBitmapSourceFromHBitmap(bitmap.GetHbitmap(), IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
             return bmSource;
         }
 

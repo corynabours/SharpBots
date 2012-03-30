@@ -6,6 +6,6 @@
              mc:Ignorable="d" 
              d:DesignHeight="60" d:DesignWidth="60">
     <Canvas Width="60" Height="60">
-        <Image Name="Boom" Width="60" Height="60" Canvas.Top="0" Canvas.Left="0" />
+        <Image Name="Boom" Width="60" Height="60" Canvas.Top="0" Canvas.Left="0" Source="{Binding BoomImage}" />
     </Canvas>
 </UserControl>

@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Linq;
 using System.Threading;
 using CSBot.Robots;
+using CSRobots.ViewModels;
 
 namespace CSRobots
 {
@@ -65,7 +66,7 @@ namespace CSRobots
         {
             var runOptions = arg as RunOptions;
             if (runOptions == null) return;
-            RunOptions = runOptions;
+            MainView.RunOptions = runOptions;
             App.Main();
             PrintOutcome(runOptions.Battlefield);
         }

@@ -40,6 +40,7 @@
     <Reference Include="PresentationCore" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -50,11 +51,75 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseViewModel.cs" />
+    <Compile Include="BulletView.cs" />
+    <Compile Include="EmbeddedImage.cs" />
+    <Compile Include="ExplosionView.cs" />
     <Compile Include="MainView.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RobotColorImages.cs" />
+    <Compile Include="RobotStatus.cs" />
     <Compile Include="RobotView.cs" />
     <Compile Include="ViewLocator.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CSBot.Robots\CSBot.Robots.csproj">
+      <Project>{DA961973-22A1-4F30-BE36-0535EA632D71}</Project>
+      <Name>CSBot.Robots</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="images\explosion00.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="images\explosion14.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="images\explosion01.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="images\explosion02.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="images\explosion03.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="images\explosion04.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="images\explosion05.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="images\explosion06.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="images\explosion07.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="images\explosion08.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="images\explosion09.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="images\explosion10.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="images\explosion11.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="images\explosion12.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="images\explosion13.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="images\red_body000.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="images\red_radar000.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="images\red_turret000.gif" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

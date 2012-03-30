@@ -2,26 +2,78 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:vm="clr-namespace:CSRobots.ViewModels;assembly=CSRobots.ViewModels"
-        Title="Sharp Bots" Height="800" Width="800">
+        xmlns:CSRobots="clr-namespace:CSRobots" Title="Sharp Bots" Height="800" Width="800">
     <Window.Resources>
         <ResourceDictionary>
-            <BooleanToVisibilityConverter x:Key="boolToVis" />
-            <vm:ViewLocator x:Key="Locator" />
+            <BooleanToVisibilityConverter x:Key="boolToVis" />            
+        	<vm:ViewLocator x:Key="Locator" />
         </ResourceDictionary>
     </Window.Resources>
     <Window.DataContext>
         <Binding Source="{StaticResource Locator}" Path="MainView" />
     </Window.DataContext>
     <Canvas Background="Black" Name="Canvas">
-        <TextBlock Name="Robot0" Canvas.Top="5" Canvas.Left="5" />
-        <TextBlock Name="Robot1" Canvas.Top="15" Canvas.Left="5" />
-        <TextBlock Name="Robot2" Canvas.Top="25" Canvas.Left="5" />
-        <TextBlock Name="Robot3" Canvas.Top="35" Canvas.Left="5" />
-        <TextBlock Name="Robot4" Canvas.Top="45" Canvas.Left="5" />
-        <TextBlock Name="Robot5" Canvas.Top="55" Canvas.Left="5" />
-        <TextBlock Name="Robot6" Canvas.Top="65" Canvas.Left="5" />
-        <TextBlock Name="Robot7" Canvas.Top="75" Canvas.Left="5" />
-        <TextBlock Name="GameOver" Canvas.Top="400" Canvas.Left="400" TextAlignment="Center" FontSize="36" Foreground="White"/>
-        
+        <ItemsControl ItemsSource="{Binding Status}">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Text}" Foreground="{Binding Color}"/>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>            
+        </ItemsControl>
+        <TextBlock Name="GameOver" Canvas.Top="400" Canvas.Left="400" TextAlignment="Center" Text="{Binding GameOver}" FontSize="36" Foreground="White"/>
+        <ItemsControl ItemsSource="{Binding Bots}">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <CSRobots:Robot DataContext="{Binding}" />
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Canvas/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemContainerStyle>
+                <Style TargetType="ContentPresenter">
+                    <Setter Property="Canvas.Left" Value="{Binding Path=Left}" />
+                    <Setter Property="Canvas.Top" Value="{Binding Path=Top}" />
+                </Style>
+            </ItemsControl.ItemContainerStyle>            
+        </ItemsControl>
+        <ItemsControl ItemsSource="{Binding Bullets}">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <CSRobots:Bullet DataContext="{Binding}" />
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Canvas/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemContainerStyle>
+                <Style TargetType="ContentPresenter">
+                    <Setter Property="Canvas.Left" Value="{Binding Path=Left}" />
+                    <Setter Property="Canvas.Top" Value="{Binding Path=Top}" />
+                </Style>
+            </ItemsControl.ItemContainerStyle>
+        </ItemsControl>
+        <ItemsControl ItemsSource="{Binding Explosions}">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <CSRobots:Explosion DataContext="{Binding}" />
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Canvas/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemContainerStyle>
+                <Style TargetType="ContentPresenter">
+                    <Setter Property="Canvas.Left" Value="{Binding Path=Left}" />
+                    <Setter Property="Canvas.Top" Value="{Binding Path=Top}" />
+                </Style>
+            </ItemsControl.ItemContainerStyle>
+        </ItemsControl>
     </Canvas>
 </Window>

@@ -1,4 +1,6 @@
-﻿namespace CSBot.Robots
+﻿using System;
+
+namespace CSBot.Robots
 {
     public class State
     {
@@ -21,6 +23,8 @@
         public int Speed { get; set; }
         public double X { get; set; }
         public double Y { get; set; }
+
+        public Random Random { get; set; }
 
         public State Copy()
         {

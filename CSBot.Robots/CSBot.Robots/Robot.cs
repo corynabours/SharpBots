@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace CSBot.Robots
 {
@@ -146,6 +147,8 @@ namespace CSBot.Robots
         {
             get { return State.Y; }
         }
+
+        public Random Random { get { return State.Random; } }
 
         public abstract void Tick(Events events);
 

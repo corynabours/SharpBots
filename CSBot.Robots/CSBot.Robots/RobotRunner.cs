@@ -125,6 +125,7 @@ namespace CSBot.Robots
             int distanceX = _battlefield.Width/2;
             int distanceY = _battlefield.Height/2;
             Random random = _battlefield.Random;
+            _state.Random = random;
             _state.X += Convert.ToDouble((random.NextDouble() - 0.5))*2*distanceX;
             _state.Y += Convert.ToDouble((random.NextDouble() - 0.5)*2*distanceY);
             _state.GunHeat = 3;

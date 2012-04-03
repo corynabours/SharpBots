@@ -21,7 +21,7 @@
                 <RotateTransform Angle="{Binding RadarHeading}"/>
             </Image.RenderTransform>
         </Image>
-        <TextBlock Name="Name" Canvas.Top="60" Canvas.Left="0" Text="{Binding RobotName}" Foreground="{Binding Color}" />
+        <TextBlock Name="RobotName" Canvas.Top="60" Canvas.Left="0" Text="{Binding RobotName}" Foreground="{Binding Color}" />
         <TextBlock Name="Health" Canvas.Top="70" Canvas.Left="0" Text="{Binding Health}" Foreground="{Binding Color}"  />
     </Canvas>
 </UserControl>

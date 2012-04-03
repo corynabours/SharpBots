@@ -107,6 +107,8 @@ namespace CSBot.Robots
         {
             _state.X = Convert.ToDouble(_battlefield.Width)/2;
             _state.Y = Convert.ToDouble(_battlefield.Height)/2;
+            _state.BattlefieldHeight = _battlefield.Height;
+            _state.BattlefieldWidth = _battlefield.Width;
             _speechCounter = -1;
             _speech = null;
             _state.Time = 0;
@@ -186,7 +188,7 @@ namespace CSBot.Robots
                 Actions.Accelerate = Clamp(Robot.Actions.Accelerate, AccelerateMin, AccelerateMax);
             if (!String.IsNullOrEmpty(Robot.Actions.Say)) Actions.Say = MaxLength(Robot.Actions.Say, SayMax);
             if (!String.IsNullOrEmpty(Robot.Actions.Broadcast))
-                Actions.Say = MaxLength(Robot.Actions.Broadcast, BroadcastMax);
+                Actions.Broadcast = MaxLength(Robot.Actions.Broadcast, BroadcastMax);
         }
 
 
@@ -306,7 +308,7 @@ namespace CSBot.Robots
             {
                 if ((other == this) || (other.Dead()) || (other.Team != Team)) continue;
                 string msg = other.Actions.Broadcast;
-                if (string.IsNullOrEmpty(msg))
+                if (!string.IsNullOrEmpty(msg))
                 {
                     _events.Broadcasts.Add(msg);
                 }

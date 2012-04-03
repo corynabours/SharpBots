@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NervousDuck", "..\CSBot.Rob
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kite2", "Kite2\Kite2.csproj", "{1428AB1C-0245-4157-B602-D2A2F0EEF3B3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pair", "Pair\Pair.csproj", "{51111AFA-3E2E-461F-9697-3A5302B8031A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -31,6 +33,10 @@ Global
 		{1428AB1C-0245-4157-B602-D2A2F0EEF3B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1428AB1C-0245-4157-B602-D2A2F0EEF3B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1428AB1C-0245-4157-B602-D2A2F0EEF3B3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{51111AFA-3E2E-461F-9697-3A5302B8031A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{51111AFA-3E2E-461F-9697-3A5302B8031A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{51111AFA-3E2E-461F-9697-3A5302B8031A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{51111AFA-3E2E-461F-9697-3A5302B8031A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

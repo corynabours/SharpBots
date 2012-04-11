@@ -10,7 +10,7 @@ namespace CSBot.Robots
         public State State { get; internal set; }
         public string SkinPrefix { get; internal set; }
 
-        public Robot()
+        protected Robot()
         {
             Events = new Events();
             Actions = new Actions();

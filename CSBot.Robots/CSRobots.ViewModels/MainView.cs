@@ -208,7 +208,7 @@ namespace CSRobots.ViewModels
             {
                 robot.Draw();
                 var robot1 = robot;
-                Dispatcher.FromThread(_uiThread).Invoke(DispatcherPriority.Render, new Action(() => SetStatusText(robot1.Index, robot1.RobotName.PadRight(20, ' ') + robot1.Energy.ToString(CultureInfo.InvariantCulture))));
+                Dispatcher.FromThread(_uiThread).Invoke(DispatcherPriority.Render, new Action(() => SetStatusText(robot1.Index, robot1.RobotName.PadRight(20, ' ') + robot1.Energy.ToString("F", CultureInfo.InvariantCulture))));
                 DrawRadar(robot);
             }
         }

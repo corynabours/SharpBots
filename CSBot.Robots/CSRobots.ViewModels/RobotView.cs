@@ -121,9 +121,9 @@ namespace CSRobots.ViewModels
         {
             Top = Convert.ToInt32((_robot.Y - _robot.Size)/2);
             Left = Convert.ToInt32((_robot.X - _robot.Size) / 2);
-            BodyHeading = Convert.ToInt32(_robot.Heading);
-            TurretHeading = Convert.ToInt32(_robot.GunHeading);
-            RadarHeading = Convert.ToInt32(_robot.RadarHeading);
+            BodyHeading = 0 - Convert.ToInt32(_robot.Heading);
+            TurretHeading = 0 - Convert.ToInt32(_robot.GunHeading);
+            RadarHeading = 0 - Convert.ToInt32(_robot.RadarHeading);
             Speech = _robot.Speech;
             Speech = _robot.Speech;
             Health = "".PadRight(Convert.ToInt32(_robot.Energy) / 5, '|');

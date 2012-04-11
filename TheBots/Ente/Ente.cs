@@ -215,7 +215,7 @@ namespace Ente
 
         private double Rand(int p0)
         {
-            return Random.NextDouble() * p0;
+            return this.Random.NextDouble() * p0;
         }
 
         public override string Name

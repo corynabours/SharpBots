@@ -31,12 +31,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CSRobots">
-      <HintPath>..\..\CSBot.Robots\CSRobots\bin\Debug\CSRobots.exe</HintPath>
-    </Reference>
-    <Reference Include="CSRobots.ViewModels">
-      <HintPath>..\..\CSBot.Robots\CSRobots\bin\Debug\CSRobots.ViewModels.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -47,16 +41,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\CSBot.Robots\NervousDuck\NervousDuck.csproj">
-      <Project>{EDD03EA6-EEA7-49F1-815C-01BBEA670F54}</Project>
-      <Name>NervousDuck</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\CSBot.Robots\SittingDuck\SittingDuck.csproj">
-      <Project>{5E6603C0-EDD3-431F-909D-AD87647F048E}</Project>
-      <Name>SittingDuck</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

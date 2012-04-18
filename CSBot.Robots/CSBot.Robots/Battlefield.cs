@@ -14,11 +14,8 @@ namespace CSBot.Robots
             Seed = seed;
             Time = 0;
             _robots = new List<RobotRunner>();
-            //@teams = Hash.new{|h,k| h[k] = [] }
             _bullets = new List<Bullet>();
             _explosions = new List<Explosion>();
-            _newBullets = new List<Bullet>();
-            _newExplosions = new List<Explosion>();
             Timeout = timeout;
             GameOver = false;
             _random = new Random((int)seed);
@@ -40,7 +37,11 @@ namespace CSBot.Robots
 
         public List<Bullet> NewBullets
         {
-            get { return _newBullets; }
+            get
+            {
+                return _bullets.Where(bullet => bullet.AddedToScreen == false)
+                  .ToList();
+            }
         }
 
         public List<Explosion> Explosions
@@ -50,7 +51,11 @@ namespace CSBot.Robots
 
         public List<Explosion> NewExplosions
         {
-            get { return _newExplosions; }
+            get
+            {
+                return _explosions.Where(explosion => explosion.AddedToScreen == false)
+                    .ToList();
+            }
         }
 
         public int Time { get; set; }
@@ -63,33 +68,29 @@ namespace CSBot.Robots
             _robots.Add(robot);
         }
 
-        internal void Add(Bullet bullet)
+        public void Add(Bullet bullet)
         {
-            _newBullets.Add(bullet);
+            _bullets.Add(bullet);
         }
 
         public void Process(Bullet bullet)
         {
-            _newBullets.Remove(bullet);
-            _bullets.Add(bullet);
+            bullet.AddedToScreen = true;
         }
 
-        internal void Add(Explosion explosion)
+        public void Add(Explosion explosion)
         {
-            _newExplosions.Add(explosion);
+            _explosions.Add(explosion);
         }
 
         public void Process(Explosion explosion)
         {
-            _newExplosions.Remove(explosion);
-            _explosions.Add(explosion);
+            explosion.AddedToScreen = true;
         }
 
         private readonly List<RobotRunner> _robots = new List<RobotRunner>();
         private readonly List<Bullet> _bullets = new List<Bullet>();
-        private readonly List<Bullet> _newBullets = new List<Bullet>();
         private readonly List<Explosion> _explosions = new List<Explosion>();
-        private readonly List<Explosion> _newExplosions = new List<Explosion>();
         //attr_reader :teams
 
         private readonly Random _random;
@@ -125,7 +126,7 @@ namespace CSBot.Robots
             if (liveRobots.Count > 0)
             {
                 var firstTeam = liveRobots[0].Team;
-                foreach (var robot in liveRobots.Where(robot => robot.Team != firstTeam))
+                if (liveRobots.Any(robot => robot.Team != firstTeam))
                 {
                     multipleTeamsLive = true;
                 }

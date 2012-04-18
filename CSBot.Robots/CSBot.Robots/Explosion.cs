@@ -2,8 +2,8 @@
 {
     public class Explosion
     {
-        private Battlefield _battlefield;
         private bool _dead;
+        
 
         public int X { get; private set; }
         public int Y { get; private set; }
@@ -15,18 +15,19 @@
             get { return _dead; }
         }
 
+        public bool AddedToScreen { get; set; }
+
         public void Tick()
         {
             T += 1;
             _dead = (T > 15);
         }
 
-        public Explosion(Battlefield bf, int x, int y)
+        public Explosion(int x, int y)
         {
             X = x;
             Y = y;
             T = 0;
-            _battlefield = bf;
             _dead = false;
         }
     }

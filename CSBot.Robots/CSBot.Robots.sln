@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSRobots", "CSRobots\CSRobo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSRobots.ViewModels", "CSRobots.ViewModels\CSRobots.ViewModels.csproj", "{046AE40E-0182-4429-8AE6-5D27198E361C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSBot.Robots.Tests", "CSBot.Robots.Tests\CSBot.Robots.Tests.csproj", "{F7C86064-437A-4C4D-BF20-00A00D2DEE29}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,6 +49,16 @@ Global
 		{046AE40E-0182-4429-8AE6-5D27198E361C}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{046AE40E-0182-4429-8AE6-5D27198E361C}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{046AE40E-0182-4429-8AE6-5D27198E361C}.Release|x86.ActiveCfg = Release|Any CPU
+		{F7C86064-437A-4C4D-BF20-00A00D2DEE29}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F7C86064-437A-4C4D-BF20-00A00D2DEE29}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F7C86064-437A-4C4D-BF20-00A00D2DEE29}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{F7C86064-437A-4C4D-BF20-00A00D2DEE29}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{F7C86064-437A-4C4D-BF20-00A00D2DEE29}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{F7C86064-437A-4C4D-BF20-00A00D2DEE29}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F7C86064-437A-4C4D-BF20-00A00D2DEE29}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F7C86064-437A-4C4D-BF20-00A00D2DEE29}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{F7C86064-437A-4C4D-BF20-00A00D2DEE29}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{F7C86064-437A-4C4D-BF20-00A00D2DEE29}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -12,6 +12,8 @@ namespace CSBot.Robots
         private readonly RobotRunner _origin;
         private bool _dead;
 
+        public bool AddedToScreen { get; set; }
+
         public double X
         {
             get { return _x; }
@@ -22,12 +24,12 @@ namespace CSBot.Robots
             get { return _y; }
         }
 
-        internal decimal Energy
+        public decimal Energy
         {
             get { return _strength; }
         }
 
-        internal Bullet(Battlefield battlefield, double x, double y, double heading, int speed, decimal strength, RobotRunner robotRunner)
+        public Bullet(Battlefield battlefield, double x, double y, double heading, int speed, decimal strength, RobotRunner robotRunner)
         {
             _battlefield = battlefield;
             _x = x;
@@ -39,7 +41,7 @@ namespace CSBot.Robots
             _dead = false;
         }
 
-        internal void Tick()
+        public void Tick()
         {
             if (_dead) return;
             _x += Math.Cos(ToRadians(_heading))*_speed;
@@ -49,7 +51,7 @@ namespace CSBot.Robots
             foreach (var other in _battlefield.Robots)
                 if ((other != _origin) && (Hypotenuse(_y - other.Y, other.X - _x) < 40) && (!other.Dead()))
                 {
-                    var explosion = new Explosion(_battlefield, Convert.ToInt32(other.X), Convert.ToInt32(other.Y));
+                    var explosion = new Explosion(Convert.ToInt32(other.X), Convert.ToInt32(other.Y));
                     _battlefield.Add(explosion);
                     var damage = other.Hit(this);
                     _origin.DamageGiven += damage;
@@ -61,6 +63,7 @@ namespace CSBot.Robots
         public bool Dead
         {
             get { return _dead; }
+            set { _dead = value; }
         }
 
         private double ToRadians(double heading)

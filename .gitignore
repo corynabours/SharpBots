@@ -24,3 +24,5 @@ TheBots/Pair/obj/*
 bin/*
 TheBots/Ente/bin/*
 TheBots/Ente/obj/*
+CSBot.Robots/CSBot.Robots.Tests/obj/*
+TheBots/Invader/obj/*

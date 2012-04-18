@@ -40,7 +40,7 @@ namespace NervousDuck
 }
 ----------------------- code -----------------------
 
-all you need to implement is the tick method which should accept an events object of events that have occurred during the last tick.
+all you need to implement is the tick method which should accept an Events object of events that have occurred during the last tick.
 
 By deriving from Robot you get all this methods to control your bot:
 
@@ -75,7 +75,7 @@ By deriving from Robot you get all this methods to control your bot:
                       #events with the msg and rough direction)
 
 These methods are intentionally of very basic nature, you are free to
-unleash the whole power of ruby to create higher level functions.
+unleash the whole power of C# to create higher level functions.
 (e.g. move_to, fire_at and so on)
 
 Some words of explanation: The gun is mounted on the body, if you turn
@@ -85,7 +85,7 @@ degrees if you turn your body, gun and radar in the same direction) but
 will report only the distance of scanned robots, not the angle. If you 
 want more precision you have to turn your radar slower.
 
-CSRobots is implemented in C# using MPF should run on windows.
+CSRobots is implemented in C# using MPF and should run on windows.
 
 To start a match call:
 CSRobots.exe [resolution] [#match] [-nogui] [-speed=<N>] [-timeout=<N>] 
@@ -107,4 +107,3 @@ CSRobots.exe [resolution] [#match] [-nogui] [-speed=<N>] [-timeout=<N>]
   e.g. 'CSRobots.exe SittingDuck NervousDuck'
   or 'CSRobots.exe 600 600 #1234567890 SittingDuck NervousDuck'
 
-If you want to run a tournament call:
